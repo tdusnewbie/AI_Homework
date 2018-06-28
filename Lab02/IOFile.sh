@@ -2,26 +2,28 @@
 
 function downloadData
 {
-	local pathFile=$1
+	local pathFile="$1"
 	local flag=0
 	local temp
 	if [[ -a "$pathFile" ]];then
-		read _numNode < $pathFile
 		while read LINE;do
-			if [[ ${#LINE} -eq 1 ]];then
-				flag=1
-			
-			elif [[ $flag -eq 1 ]]; then
-				local _info="$LINE"
-				read _source _destination <<< "$_info"
-				flag=0
+			if [[ $flag -lt 2 ]]; then
+				case $flag in
+					0) _numNode=$LINE
+					;;
+					1) local _info="$LINE"
+					read _source _destination <<< "$_info"
+					;;
+				esac
+				let flag++
 			else
 				temp+=("$LINE")
 			fi
-		done < $pathFile
+		done < "$pathFile"
+		temp=$(echo "${temp[@]}" | tr -d '\r' )
 		addToMatrix ${temp[*]}
 	fi
-}
+}	
 
 function addToMatrix
 {
@@ -38,6 +40,6 @@ function uploadData
 	local filename=$1
 	touch "$filename"
 	echo "$cost" > "$filename"
-	echo -n "$result" >> "$filename"
+	echo "$result" >> "$filename"
 	return 0
 }

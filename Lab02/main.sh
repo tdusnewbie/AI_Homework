@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Take the Path to neccessary Function
-source fileManipulation.sh
-source ucs.sh
-source ids.sh
+source IOFile.sh
+source UCS.sh
+source IDS.sh
 
 # Manipulating User Input
-fileinput=$1
-declare -u algo=$2
-fileoutput=$3
+fileinput="$1"
+declare -u algo="$2"
+fileoutput="$3"
 
 # Global Function
 declare -A matrix
