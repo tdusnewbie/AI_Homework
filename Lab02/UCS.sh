@@ -4,10 +4,10 @@ declare -a queue
 
 function sortQueue
 {
-	queue=($(echo "${queue[@]}" | tr " " "\n" | sort -t ":" -k 2n | tr "\n" " "))
+	queue=($(echo "${queue[@]}" | tr " " "\n" | sort -t ":" -k 2nb | tr "\n" " "))
 }
 
-function pushBack
+function pushBackQueue
 {
 	local posNode=$1
 	local priNode=$2
@@ -37,7 +37,7 @@ function UCS
 	local pos=0
 	local pri=0
 	local path=$pos
-	pushBack $pos $pri "$path"
+	pushBackQueue $pos $pri "$path"
 	existed[0]="1"
 	while [[ ${#queue[@]} -gt 0 ]]; do
 		# take the first element in Queue out
@@ -58,7 +58,7 @@ function UCS
 				#If This Node has not existed in Queue 
 				if [[ ${existed[$i]} -eq 0 ]]; then
 					# Push it into Queue
-					pushBack $i $priChild "$pathChild"
+					pushBackQueue $i $priChild "$pathChild"
 					existed[$i]=1
 				#If this node has existed in Queue
 				else

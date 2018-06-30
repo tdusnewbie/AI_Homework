@@ -5,6 +5,7 @@ source IOFile.sh
 source UCS.sh
 source IDS.sh
 
+
 # Manipulating User Input
 fileinput="$1"
 declare -u algo="$2"
@@ -18,14 +19,19 @@ _destination=
 result=""
 cost=0
 
-#Read File 
+# Read File 
 downloadData "$fileinput"
 
 # Use AlgoRithm
-UCS $_source $_destination
-# echo "Vay Path la: $result"
-# echo "${#result}"
+case "$algo" in
+	UCS ) UCS $_source $_destination
+	;;
+	IDS ) IDS $_source $_destination
+	;;
+esac
+result="$(echo "$result" | tr -d ">" | tr "-" " ")"
 
+# Write File 
 uploadData "$fileoutput"
 # x+y+z=string.size()
 # x=y+1
