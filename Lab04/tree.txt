@@ -1,0 +1,10 @@
+outlook
+  --sunny
+    ----humidity
+      ------high : no
+      ------normal : yes
+  --overcast : yes
+  --rainy
+    ----windy
+      ------false : yes
+      ------true : no
